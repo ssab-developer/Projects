@@ -43,14 +43,14 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:author_id', async (req, res) => {
+router.get('/:author_id/getName=', async (req, res) => {
     const {
         author_id
     } = req.params
     try {
         const author = await authorModel.find({
             "id": author_id
-        },'-_id'); //projection
+        }, '-_id name'); //projection
         res.json({
             data: author,
             message: "Successful"
@@ -71,9 +71,9 @@ router.put('/updateName', async (req, res) => {
     try {
         const author = await authorModel.updateMany({
             "id": author_id
-        },{
+        }, {
             "name": author_name
-        }); 
+        });
         res.json({
             data: author,
             message: "Successful"
@@ -93,7 +93,23 @@ router.delete('/delete/:author_id', async (req, res) => {
     try {
         const author = await authorModel.deleteOne({
             "id": author_id
-        }); 
+        });
+        res.json({
+            data: author,
+            message: "Successful"
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({
+            data: [],
+            message: error
+        });
+    }
+});
+
+router.delete('/deleteAll', async (req, res) => {
+    try {
+        const author = await authorModel.deleteMany({});
         res.json({
             data: author,
             message: "Successful"
