@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             candiesList.push(i, i + 1, i + 2)
             if (no_of_candies == 4) candiesList.push(i + 3)
             if (no_of_candies == 5) candiesList.push(i + 4)
-        
+
             let desiredImage = candies[i].style.backgroundImage;
 
             if (invalidIndex.includes(i)) continue;
@@ -133,6 +133,99 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    function checkColumn(no_of_candies) {
+        let len = width * (width - (no_of_candies - 1)) - 1;
+
+        for (let i = 0; i <= len; i++) {
+            let candiesList = [];
+            candiesList.push(i, i + width, i + width * 2);
+            if (no_of_candies == 4) candiesList.push(i + width * 3)
+            if (no_of_candies == 5) candiesList.push(i + width * 4)
+
+            let desiredImage = candies[i].style.backgroundImage;
+
+            let match = candiesList.every(index => desiredImage != "" && candies[index].style.
+                backgroundImage == desiredImage);
+            if (match) {
+                score += no_of_candies;
+                console.log(score);
+                candiesList.forEach(index => candies[index].style.backgroundImage = "")
+            }
+        }
+    }
+
+    // function checkColumnForFive() {
+
+    //     let len = width * (width - 4) - 1
+
+    //     for (let i = 0; i <= len; i++) {
+    //         let fiveCandies = [i, i + width, i + width * 2, i + width * 3, i + width * 4];
+    //         let desiredImage = candies[i].style.backgroundImage;
+
+    //         let match = fiveCandies.every(index => desiredImage != "" && candies[index].style.
+    //             backgroundImage == desiredImage);
+    //         if (match) {
+    //             score += 5;
+    //             console.log(score);
+    //             fiveCandies.forEach(index => candies[index].style.backgroundImage = "")
+    //         }
+    //     }
+    // }
+
+    // function checkColumnForFour() {
+
+    //     let len = width * (width - 3) - 1
+
+    //     for (let i = 0; i <= len; i++) {
+    //         let fourCandies = [i, i + width, i + width * 2, i + width * 3];
+    //         let desiredImage = candies[i].style.backgroundImage;
+
+    //         let match = fourCandies.every(index => desiredImage != "" && candies[index].style.
+    //             backgroundImage == desiredImage);
+    //         if (match) {
+    //             score += 4;
+    //             console.log(score);
+    //             fourCandies.forEach(index => candies[index].style.backgroundImage = "")
+    //         }
+    //     }
+    // }
+
+    // function checkColumnForThree() {
+
+    //     let len = width * (width - 2) - 1
+
+    //     for (let i = 0; i <= len; i++) {
+    //         let threeCandies = [i, i + width, i + width * 2];
+    //         let desiredImage = candies[i].style.backgroundImage;
+
+    //         let match = threeCandies.every(index => desiredImage != "" && candies[index].style.
+    //             backgroundImage == desiredImage);
+    //         if (match) {
+    //             score += 3;
+    //             console.log(score);
+    //             threeCandies.forEach(index => candies[index].style.backgroundImage = "")
+    //         }
+
+    //     }
+
+    // }
+
+    function init() {
+        checkRow(5);
+        checkColumn(5);
+        checkRow(4);
+        checkColumn(4);
+        checkRow(3);
+        checkColumn(3)
+        generateRandomCandies();
+    }
+    init();
+
+    window.setInterval(function () {
+        init();
+    }, 500)
+});
 
     // function checkRowForFive() {
     //     let invalidIndex = [];
@@ -204,75 +297,3 @@ document.addEventListener('DOMContentLoaded', () => {
     //         }
     //     }
     // }
-
-    function checkColumnForFive() {
-
-        let len = width * (width - 4) - 1
-
-        for (let i = 0; i <= len; i++) {
-            let fiveCandies = [i, i + width, i + width * 2, i + width * 3, i + width * 4];
-            let desiredImage = candies[i].style.backgroundImage;
-
-            let match = fiveCandies.every(index => desiredImage != "" && candies[index].style.
-                backgroundImage == desiredImage);
-            if (match) {
-                score += 5;
-                console.log(score);
-                fiveCandies.forEach(index => candies[index].style.backgroundImage = "")
-            }
-        }
-    }
-
-    function checkColumnForFour() {
-
-        let len = width * (width - 3) - 1
-
-        for (let i = 0; i <= len; i++) {
-            let fourCandies = [i, i + width, i + width * 2, i + width * 3];
-            let desiredImage = candies[i].style.backgroundImage;
-
-            let match = fourCandies.every(index => desiredImage != "" && candies[index].style.
-                backgroundImage == desiredImage);
-            if (match) {
-                score += 4;
-                console.log(score);
-                fourCandies.forEach(index => candies[index].style.backgroundImage = "")
-            }
-        }
-    }
-
-    function checkColumnForThree() {
-
-        let len = width * (width - 2) - 1
-
-        for (let i = 0; i <= len; i++) {
-            let threeCandies = [i, i + width, i + width * 2];
-            let desiredImage = candies[i].style.backgroundImage;
-
-            let match = threeCandies.every(index => desiredImage != "" && candies[index].style.
-                backgroundImage == desiredImage);
-            if (match) {
-                score += 3;
-                console.log(score);
-                threeCandies.forEach(index => candies[index].style.backgroundImage = "")
-            }
-
-        }
-
-    }
-
-    function init() {
-        checkRow(5);
-        checkColumnForFive();
-        checkRow(4);
-        checkColumnForFour();
-        checkRow(3);
-        checkColumnForThree()
-        generateRandomCandies();
-    }
-    init();
-
-    window.setInterval(function () {
-        init();
-    }, 300)
-});
