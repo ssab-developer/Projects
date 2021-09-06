@@ -1,13 +1,15 @@
 .grid {
+    border: 5px solid crimson;
     height: 640px;
     width: 640px;
     display: flex;
     flex-wrap: wrap;
     margin: 50px 80px;
-    background-color: darkgreen;
+    background-color: cadetblue;
 }
 
 .grid div {
+    background-repeat: no-repeat;
     margin: 5px;
     width: 70px;
     height: 70px;
