@@ -12,6 +12,12 @@ router.post('/', async (req, res) => {
     } = req.body;
 
 
+    // validate data manaully (id should be present)
+    var errorMessage = []
+    if(authorData.id == undefined || authorData.id == null || authorData.id == ""){
+        errorMessage.push("")
+    }
+
     try{
         const author = await authorModel.create(authorData);
         res.json({
