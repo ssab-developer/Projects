@@ -2,28 +2,13 @@ const mongoose = require('mongoose');
 
 var authorSchema = mongoose.Schema({
     id: Number,
-    name: {
-        type: String,
-        require: true
-    },
-    contact_no:{
-        type: String,
-        require:true
-    },
-    email:{
-        type: String,
-        require:true
-    },
-    books_published: Array,
-    country: {
-        type: String,
-        require: true
-    },
     age: Number,
-    gender:{
-        type: String,
-        require:true
-    },
+    email: String,
+    name: String,
+    contact_no: String,
+    country: String,
+    gender: String,
+    books_published: Array,
 },{
     strict: true
 });

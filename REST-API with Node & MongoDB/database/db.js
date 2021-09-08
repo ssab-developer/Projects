@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const password = encodeURIComponent('Bokhari@786');
 // const url = 'mongodb+srv://vjtron:pass_123@cluster0.syhxj.mongodb.net/sample_airbnb?retryWrites=true&w=majority';
-const url = `mongodb+srv://syed-sanaulla_049:${password}@cluster0.dozcc.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
+const url = `mongodb+srv://syed-sanaulla_049:${password}@cluster0.dozcc.mongodb.net/sample_airbnb?
+retryWrites=true&w=majority`;
 
 // Connect database URL (any type of url)
 mongoose.connect(url, {

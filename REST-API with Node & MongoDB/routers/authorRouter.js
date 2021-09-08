@@ -1,3 +1,7 @@
+// In routes we will define parths or urls to particular resources
+// In Controllers we will define business logic for the path 
+//  Models are specifically the middle ware between NODE server and DATABASE
+
 const express = require('express');
 const router = express.Router();
 
