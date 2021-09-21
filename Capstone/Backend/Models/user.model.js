@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt'); // Its a package that helps to hash your passw
  * 
  * User Schema 
  * 
- * 
  * @attribites
  * firstName
  * lastName
@@ -40,7 +39,7 @@ var userSchema = mongoose.Schema({
         unique: true, // It has to be unique
         lowercase: true // All should be in lowercase
     },
-    username: {
+    userName: {
         type: String,
         required: [true, "Please provide your Username"],
         trim: true, // It removes blank space in start and end of string
@@ -50,7 +49,8 @@ var userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["user", "admin", "super-admin"] // enumeration "role" will take either of these values only....
+        enum: ["user", "admin", "super-admin"], // enumeration "role" will take either of these values only....
+        default: "user"
     },
     contact_number: {
         type: String,
@@ -63,24 +63,36 @@ var userSchema = mongoose.Schema({
     timestamps: true, // Configurations----- It tells when the document has created and when was it last updated
 });
 
-/**
- * Password should be always hashed
- * "virtual" is an attribute on your db that can be used for computational purposes
- * Virtual are properties not stored in database 
- * They are only logically stored to perform computations on the document fields 
- */
-userSchema.virtual('password').set(() => {
-    this.hash_password = bcrypt.hashSync(password, 100)
+userSchema.virtual('password').set(function (password) {
+    this.hash_password = bcrypt.hashSync(password, 12)
 })
 
-userSchema.virtual('fullName').get(() => {
+userSchema.virtual('fullName').get(function () {
     return this.firstName + ' ' + this.lastName;
-}).set((fullName) => {
+}).set(function (fullName) {
     this.firstName = fullName.split(' ')[0];
     this.lastName = fullName.split(' ')[1];
 })
 
+userSchema.methods = {
+    authenticate: function (password) {
+        return bcrypt.compareSync(password, this.hash_password)
+    }
+}
 module.exports = mongoose.model('User', userSchema);
 
+/**
+ * If we use arrow functions in virtual set-password.... "this" keyword will point out to the "const userSchema"...
+ * So instead of arrow function we will be using anonymous function --> It will point out to the new user which is present in router.
+ * BASIC API FLOW:
+ * client <--> node server [server.js <--> route <--> controller <--> model , save data to DB]
+ *
+ * In models before sending data to DB, it will check for virtual
+ */
 
-
+/**
+ * Password should be always hashed
+ * "virtual" is an attribute on your db that can be used for computational purposes
+ * Virtual are properties not stored in database
+ * They are only logically stored to perform computations on the document fields.
+ */

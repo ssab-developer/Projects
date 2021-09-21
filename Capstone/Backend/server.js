@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors'); // Cross-Origin Resource Sharing
 
+// Enable environmental file
 const dotenv = require('dotenv');
 dotenv.config(); // function is invoked
 
@@ -9,8 +10,13 @@ const app = express();
 
 // enable environment file
 
-app.use(cors()); //Midddle wares
+app.use(cors()); //Middle wares
 app.use(express.json());
+
+const userRouters = require('./Routers/user.router')
+
+
+app.use('/api', userRouters);
 
 // Start Server Call
 app.listen(process.env.PORT, () => {

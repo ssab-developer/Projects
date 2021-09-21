@@ -1,19 +1,22 @@
-// In routes we will define parths or urls to particular resources
+// In routes we will define paths or urls to particular resources
+const express = require("express");
+const router = express.Router();
+const {
+    signup,
+    signin
+} = require('../Controllers/user.controller')
 
-/**
- * route /signup
- * 
- * 
- * @params 
- * fullanme
- * email
- * password
- * username
- * contactname
- * 
- * new usermodels({
- *          password --> correct
- *          hash_password --> wrong     
- * })
- * 
+/** 
+ * route /signup 
+ *  
+ * @params  
+ * fullName 
+ * email 
+ * password 
+ *  
  */
+
+router.post('/signup', signup);
+router.post('/signin', signin);
+
+module.exports = router;
