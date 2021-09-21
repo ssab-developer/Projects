@@ -3,7 +3,6 @@
 const userModel = require('../Models/user.model');
 const { nanoid } = require('nanoid');
 const jwt = require('jsonwebtoken');
-const nodemon = require('nodemon');
 
 generateJwtToken = (_id) => {
     return jwt.sign({

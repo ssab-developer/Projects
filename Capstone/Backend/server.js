@@ -13,10 +13,9 @@ const app = express();
 app.use(cors()); //Middle wares
 app.use(express.json());
 
-const userRouters = require('./Routers/user.router')
+const indexRouters = require('./Routers/index.router')
 
-
-app.use('/api', userRouters);
+app.use('/api', indexRouters);
 
 // Start Server Call
 app.listen(process.env.PORT, () => {
