@@ -35,9 +35,22 @@ const productSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
-    }
-
-
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    reviews: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        review:{
+            type: String
+        }
+    }],
+    updatedAt: Date
+    
 }, {
     timestamp: true
 });
