@@ -4,12 +4,12 @@ const categorySchema = mongoose.Schema({
 
     name: {
         type: String,
-        require: [true, "Please provide your Category name"],
+        required: [true, "Please provide your Category name"],
         trim: true
     },
     slug: {
         type: String,
-        require: [true, "Please provide your Category slug"],
+        required: [true, "Please provide your Category slug"],
         trim: true,
         unique: true
     },
@@ -19,9 +19,11 @@ const categorySchema = mongoose.Schema({
     parentId: {
         type: String
     },
-    // createBy:{
-    //     type:String
-    // }
+    createBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    }
     
 
 }, {

@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const userRouter = require('./user.router');
+const authRouter = require('./auth.router');
 const categoryRouter = require('./category.router')
+const adminIndexRouter = require('./admin/index.router')
 
-router.use('/', userRouter);
+router.use('/', authRouter);
 router.use('/category', categoryRouter);
+router.use('/admin', adminIndexRouter);
 
-module.exports = router;
+module.exports = router; 

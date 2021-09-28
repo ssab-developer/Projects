@@ -1,18 +1,14 @@
 // In Controllers we will define business logic for the path 
 
-const userModel = require('../Models/user.model');
+const authModel = require('../Models/auth.model');
 const { nanoid } = require('nanoid');
 const jwt = require('jsonwebtoken');
 
-generateJwtToken = (_id) => {
-    return jwt.sign({
-        id: _id
-    }, process.env.JWT_SECRET_KEY, {
-        expiresIn: '1d'
-    });
-}
+const {
+    generateJwtToken
+} = require('../helpers/helper')
 
-signup = (req, res) => {
+const signup = (req, res) => {
     const {
         email,
         firstName,
@@ -20,7 +16,7 @@ signup = (req, res) => {
         password
     } = req.body;
 
-    userModel.findOne({
+    authModel.findOne({
         email: email
 
     }).exec((error, data) => {
@@ -40,7 +36,7 @@ signup = (req, res) => {
             })
         }
 
-        const _user = new userModel({
+        const _user = new authModel({
             email,
             firstName,
             lastName,
@@ -61,25 +57,31 @@ signup = (req, res) => {
             }
 
             if (user) {
-                const token = generateJwtToken(user._id);
+                const token = generateJwtToken(user._id, user._role);
                 return res.json({
                     success: true,
                     message: "User has been successfully saved",
-                    data: { user, token: token }
-                })
+                    data: {
+                        user: {
+                            fullName: user.fullName,
+                            email: user.email
+                        }
+
+                    }, token: token
+                });
             }
         })
     });
 }
 
-signin = (req, res) => {
+const signin = (req, res) => {
 
     const {
         email,
         password
     } = req.body
 
-    userModel.findOne({
+    authModel.findOne({
         email: email
     }).exec((error, data) => {
 
@@ -96,11 +98,17 @@ signin = (req, res) => {
             const isAuthenticate = data.authenticate(password);
             if (isAuthenticate) {
 
-                const token = generateJwtToken(data._id);
+                const token = generateJwtToken(data._id, data.role);
                 return res.json({
                     success: true,
                     message: "Logged in successfully",
-                    data: { data, token: token }
+                    data: {
+                        user: {
+                            fullName: data.fullName,
+                            email: data.email
+                        }
+                        , token: token
+                    }
                 })
             }
             else {
@@ -120,15 +128,16 @@ signin = (req, res) => {
 }
 
 
+
 module.exports = {
     signup,
-    signin
+    signin,
 }
 
 
 /**
  * It will only look for only ONE result in the DB
- * findOne will look for ONE result on your DB. which collects the model userModel
+ * findOne will look for ONE result on your DB. which collects the model authModel
  * and It will execute if the query returns any response then "exec" will be executed
  * It has a call back function with 2 parameters ->1. error 2. data that we get.
  *
