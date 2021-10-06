@@ -26,12 +26,12 @@ const productSchema = mongoose.Schema({
             type: String,
         }
     }],
-    categoryId: {
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: true
     },
-    createBy: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
@@ -52,7 +52,7 @@ const productSchema = mongoose.Schema({
     updatedAt: Date
     
 }, {
-    timestamp: true
+    timestamps: true
 });
 
 module.exports = mongoose.model('Product', productSchema);

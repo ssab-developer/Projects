@@ -39,6 +39,6 @@ module.exports = {
     validateSignUpRequest,
     validateSignInRequest,
     validateCreateCategoryRequest,
-    validateCreateProductRequest,
+    // validateCreateProductRequest,
     isRequestCorrect,
 }

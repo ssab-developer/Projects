@@ -1,13 +1,14 @@
+const { nanoid } = require('nanoid');
 const slugify = require('slugify')
 const categoryModel = require('../Models/category.model')
 
 
 const addNewCategory = (req, res) => {
+    let slug = slugify(req.body.name, { lower: true }) + '-' + nanoid(8);
+    
     const categoryInput = {
         name: req.body.name,
-        slug: slugify(req.body.name, {
-            lower: true
-        })
+        slug: slug
     };
     categoryInput.createBy = req.user.id;
     console.log(categoryInput);

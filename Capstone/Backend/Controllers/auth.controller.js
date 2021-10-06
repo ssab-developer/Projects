@@ -42,7 +42,6 @@ const signup = (req, res) => {
             lastName,
             password,
             userName: nanoid(10),
-
         });
 
         _user.save((error, user) => {

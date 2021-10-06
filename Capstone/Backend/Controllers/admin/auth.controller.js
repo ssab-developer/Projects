@@ -41,7 +41,6 @@ const signup = (req, res) => {
             password,
             role: 'admin',
             userName: nanoid(10),
-
         });
 
         _admin.save((error, admin) => {
